@@ -1,6 +1,8 @@
 # doseqGO
 
-- a concurrent sequence information knowledge graph
+- a concurrent sequence information knowledge graph for sequencing projects
+- plant or microbial genome sequencing
 
-Gaurav Sablok
+
+Gaurav Sablok \
 codeprog@icloud.com
