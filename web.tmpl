@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <h1>doseqGO: A stand alone server for marine genomics sequence informatics </h1>
+    <title>Sequence Information about the Sequencing Project and a standlone server</title>
+</head>
+<body>
+    <h1>Search your genes and genome and transcriptome annotations</h1>
+    <form method="POST" action="/">
+        <label for="search for the transcript id">Enter your gene name:</label>
+        <input type="text" id="userInput" name="userInput" value="">
+        <input type="submit" value="Submit">
+    </form>
+    {{if .Message}}
+    <h3>The listed gene information from the sequence search is as follows: {{.Message}}</h3>
+    {{end}}
+</body>
+</html>
+
+<style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    input[type="text"] { padding: 5px; margin-right: 10px; }
+    input[type="submit"] { padding: 5px 10px; }
+</style>

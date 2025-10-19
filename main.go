@@ -6,19 +6,31 @@ package main
  */
 
 import (
-	"os"
+	"html/template"
+	"net/http"
 )
 
+type PageData struct {
+	Message string
+}
+
 func main() {
+	tmpl := template.Must(template.ParseFiles("templates/web.tmpl"))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		data := PageData{}
+		if r.Method == http.MethodPost {
+			r.ParseForm()
+			userInput := r.FormValue("userInput")
+			if userInput != "" {
+				data.Message = userInput
+			}
+		}
 
-	argread := os.Args
-	argument := argread[1]
-	if len(argument) == 0 {
-		panic("argument cant be empty")
-	} else {
-
-	}
-	result := make(chan []FastaSequence, 1)
-	go readFasta(argument, result)
-
+		err := tmpl.Execute(w, data)
+		if err != nil {
+			http.Error(w, "Error rendering template", http.StatusInternalServerError)
+			return
+		}
+	})
+	http.ListenAndServe(":8080", nil)
 }

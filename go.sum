@@ -1,8 +1,2 @@
-github.com/bitly/go-simplejson v0.5.1 h1:xgwPbetQScXt1gh9BmoJ6j9JMr3TElvuIyjR8pgdoow=
-github.com/bitly/go-simplejson v0.5.1/go.mod h1:YOPVLzCfwK14b4Sff3oP1AmGhI9T9Vsg84etUnlyp+Q=
-github.com/go-echarts/go-echarts/v2 v2.6.5 h1:f6h2Yt8j8G2profitrlhZvE7mJe6iAI7vYmG2Qqil+M=
-github.com/go-echarts/go-echarts/v2 v2.6.5/go.mod h1:Z+spPygZRIEyqod69r0WMnkN5RV3MwhYDtw601w3G8w=
-github.com/zieckey/gochart v0.0.0-20170321103903-03ae93442a96 h1:xsDEhagPeh+WPzXZDp9np9/2NzycHvQ4q1FPXGBkbNE=
-github.com/zieckey/gochart v0.0.0-20170321103903-03ae93442a96/go.mod h1:4XqduDMcZYH89W3hrHrieMuPDheynBDC0WcU5fqFlq4=
-github.com/zieckey/goini v0.0.0-20240615065340-08ee21c836fb h1:OUO+1+QhlITLlYX5A7seO0IJ/0zq6EOdy3N0D/JLMNw=
-github.com/zieckey/goini v0.0.0-20240615065340-08ee21c836fb/go.mod h1:0kx+qq91svCIkVqz19mW/fh+oi1CbNtfCM3HjjN+aR4=
+github.com/hashicorp/go-set/v3 v3.0.1 h1:ZwO15ZYmIrFYL9zSm2wBuwcRiHxVdp46m/XA/MUlM6I=
+github.com/hashicorp/go-set/v3 v3.0.1/go.mod h1:0oPQqhtitglZeT2ZiWnRIfUG6gJAHnn7LzrS7SbgNY4=

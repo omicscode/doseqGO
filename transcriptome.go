@@ -17,7 +17,10 @@ type FastaSequence struct {
 	Sequence string
 }
 
-func readFasta(filename string, result chan []FastaSequence) {
+func readtranscriptome(result chan []FastaSequence) {
+
+	filename := "./serverfiles/transcriptome.fasta"
+
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)

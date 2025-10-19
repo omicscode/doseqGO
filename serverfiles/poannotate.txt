@@ -1,0 +1,2 @@
+FAR	transcription factor	UN00002	IPR004330	gene_7549|GeneMark.hmm|479_aa|+|354|1793
+MYB-HB-like	transcription factor	UN00003	IPR001005,IPR006447,IPR009057	gene_7913|GeneMark.hmm|452_aa|+|460|1818
