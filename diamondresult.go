@@ -12,12 +12,12 @@ import (
 	"strings"
 )
 
-type DiamondAnnotate struct {
+type DiamondResult struct {
 	id       string
 	annotate []string
 }
 
-func diamondannotate(result chan []DiamondAnnotate) {
+func diamondResult() []DiamondResult {
 
 	filename := "./serverfiles/diamondresult.txt"
 	file, err := os.Open(filename)
@@ -44,8 +44,7 @@ func diamondannotate(result chan []DiamondAnnotate) {
 		linemaplist = append(linemaplist, item)
 	}
 
-	value := []string{}
-	finalvec := []DiamondAnnotate{}
+	finalvec := []DiamondResult{}
 	for scanner.Scan() {
 		for i, _ := range linemaplist {
 			linevec := scanner.Text()
@@ -53,11 +52,12 @@ func diamondannotate(result chan []DiamondAnnotate) {
 			if linevecfirst[0] == linemaplist[i] {
 				valuestore := []string{}
 				valuestore = append(valuestore, linemaplist[i])
+				finalvec = append(finalvec, DiamondResult{
+					id:       linemaplist[i],
+					annotate: valuestore,
+				})
 			}
-			finalvec = append(finalvec, DiamondAnnotate{
-				id:       linemaplist[i],
-				annotate: value,
-			})
 		}
 	}
+	return finalvec
 }

@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func readprotein(result chan []FastaSequence) {
+func readprotein() []FastaSequence {
 
 	filename := "./serverfiles/protein.fasta"
 	file, err := os.Open(filename)
@@ -29,7 +29,7 @@ func readprotein(result chan []FastaSequence) {
 	header := []string{}
 	sequence := []string{}
 
-	newseq := []FastaSequence{}
+	newseqprotein := []FastaSequence{}
 
 	for scanner.Scan() {
 		lineread := scanner.Text()
@@ -44,10 +44,10 @@ func readprotein(result chan []FastaSequence) {
 	}
 
 	for i := 0; i <= len(header); i++ {
-		newseq = append(newseq, FastaSequence{
-			Header:   header[i],
-			Sequence: sequence[i],
+		newseqprotein = append(newseqprotein, FastaSequence{
+			header:   header[i],
+			sequence: sequence[i],
 		})
 	}
-	result <- newseq
+	return newseqprotein
 }

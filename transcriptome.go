@@ -13,11 +13,11 @@ import (
 )
 
 type FastaSequence struct {
-	Header   string
-	Sequence string
+	header   string
+	sequence string
 }
 
-func readtranscriptome(result chan []FastaSequence) {
+func readtranscriptome() []FastaSequence {
 
 	filename := "./serverfiles/transcriptome.fasta"
 
@@ -35,7 +35,7 @@ func readtranscriptome(result chan []FastaSequence) {
 	header := []string{}
 	sequence := []string{}
 
-	newseq := []FastaSequence{}
+	newseqtranscript := []FastaSequence{}
 
 	for scanner.Scan() {
 		lineread := scanner.Text()
@@ -50,10 +50,10 @@ func readtranscriptome(result chan []FastaSequence) {
 	}
 
 	for i := 0; i <= len(header); i++ {
-		newseq = append(newseq, FastaSequence{
-			Header:   header[i],
-			Sequence: sequence[i],
+		newseqtranscript = append(newseqtranscript, FastaSequence{
+			header:   header[i],
+			sequence: sequence[i],
 		})
 	}
-	result <- newseq
+	return newseqtranscript
 }

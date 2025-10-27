@@ -1,5 +1,10 @@
 package main
 
+/*
+ Gaurav Sablok
+ codeprog@icloud.com
+*/
+
 import (
 	"bufio"
 	"fmt"
@@ -14,7 +19,7 @@ type POAnnotate struct {
 	IPR            []string
 }
 
-func readannotate(result chan []POAnnotate) {
+func readannotate() []POAnnotate {
 
 	filename := "./serverfiles/poannotate.txt"
 	file, err := os.Open(filename)
@@ -41,4 +46,5 @@ func readannotate(result chan []POAnnotate) {
 			IPR:            IPRvector,
 		})
 	}
+	return poannotate
 }

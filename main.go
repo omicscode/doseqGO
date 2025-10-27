@@ -6,31 +6,98 @@ package main
  */
 
 import (
-	"html/template"
-	"net/http"
+	"log"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html/v2"
 )
 
 type PageData struct {
 	Message string
 }
 
+type lastseq struct {
+	id             string
+	transcriptseq  string
+	cdsseq         string
+	proteinseq     string
+	idtype         string
+	annotation     string
+	annotate       []string
+	GeneAnnotation string
+	AnnotationType string
+	UnigeneID      string
+	IPR            []string
+}
+
 func main() {
-	tmpl := template.Must(template.ParseFiles("templates/web.tmpl"))
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		data := PageData{}
-		if r.Method == http.MethodPost {
-			r.ParseForm()
-			userInput := r.FormValue("userInput")
-			if userInput != "" {
-				data.Message = userInput
+	engine := html.New("./views", ".html")
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
+
+	finalseq := []lastseq{}
+
+	app.Get("/submit", func(c *fiber.Ctx) error {
+		f := new(PageData)
+		for _, v := range readseqannotate() {
+			if f.Message == v.id {
+				finalseq = append(finalseq, lastseq{
+					id:             v.id,
+					transcriptseq:  v.transcriptseq,
+					cdsseq:         v.cdsseq,
+					proteinseq:     v.proteinseq,
+					idtype:         v.idtype,
+					annotation:     v.annotation,
+					annotate:       v.annotate,
+					GeneAnnotation: v.GeneAnnotation,
+					AnnotationType: v.AnnotationType,
+					IPR:            v.IPR,
+				})
 			}
 		}
-
-		err := tmpl.Execute(w, data)
-		if err != nil {
-			http.Error(w, "Error rendering template", http.StatusInternalServerError)
-			return
-		}
+		return c.Render("finalseq", fiber.Map{
+			"Finalseq": finalseq,
+		})
 	})
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(app.Listen(":3000"))
+}
+
+func readseqannotate() []lastseq {
+	cds := readcds()
+	transcript := readtranscriptome()
+	diamondresult := diamondResult()
+	diamondannotate := diamondAnnotate()
+	protein := readprotein()
+	poannotate := readannotate()
+
+	returnvecannotate := []lastseq{}
+
+	for _, v := range cds {
+		for _, id := range transcript {
+			for _, diaresult := range diamondresult {
+				for _, hint := range poannotate {
+					for _, prot := range protein {
+						for _, dia := range diamondannotate {
+							if v.header == id.header || prot.header == diaresult.id || dia.id == hint.UnigeneID {
+								returnvecannotate = append(returnvecannotate, lastseq{
+									id:             v.header,
+									transcriptseq:  id.sequence,
+									cdsseq:         v.sequence,
+									proteinseq:     prot.sequence,
+									idtype:         dia.idtype,
+									annotation:     dia.annotation,
+									annotate:       diaresult.annotate,
+									GeneAnnotation: hint.GeneAnnotation,
+									AnnotationType: hint.AnnotationType,
+									IPR:            hint.IPR,
+								})
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return returnvecannotate
 }

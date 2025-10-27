@@ -19,7 +19,7 @@ type readStore struct {
 	seq          string
 }
 
-func sam(result chan []readStore) {
+func sam() []readStore {
 
 	openFile, err := os.Open("readFile")
 	if err != nil {
@@ -27,12 +27,12 @@ func sam(result chan []readStore) {
 	}
 
 	readBuffer := bufio.NewScanner(openFile)
+	data := []readStore{}
 	for readBuffer.Scan() {
 		line := readBuffer.Text()
 		if strings.HasPrefix(line, "@") {
 			continue
 		} else {
-			data := []readStore{}
 			data = append(data, readStore{
 				idreadref:    strings.Split(line, "\t")[0],
 				idreadsample: strings.Split(line, "\t")[2],
@@ -41,4 +41,5 @@ func sam(result chan []readStore) {
 			})
 		}
 	}
+	return data
 }

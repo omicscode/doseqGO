@@ -17,15 +17,15 @@ import (
 	"strings"
 )
 
-type DiamondResult struct {
+type DiamondAnnotate struct {
 	id         string
 	idtype     string
 	annotation string
 }
 
-func diamondResult(result chan []DiamondResult) {
+func diamondAnnotate() []DiamondAnnotate {
 
-	filename := "./serverfiles/diamonsresult.txt"
+	filename := "./serverfiles/diamondannotate.txt"
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Printf("Error opening file: %v\n", err)
@@ -37,18 +37,18 @@ func diamondResult(result chan []DiamondResult) {
 		fmt.Printf("Error reading file: %v\n", err)
 	}
 
-	finalannotatewrite := []DiamondResult{}
+	finalannotatewrite := []DiamondAnnotate{}
 	for scanner.Scan() {
 		line := scanner.Text()
 		linevec := strings.Split(line, "\t")
 		linevecID := string(linevec[0])
 		linevecannotation := string(linevec[1])
 		restline := strings.Replace(strings.Replace(strings.Join(linevec[2:], "-"), "[", "", -1), "]", "", -1)
-		finalannotatewrite = append(finalannotatewrite, DiamondResult{
+		finalannotatewrite = append(finalannotatewrite, DiamondAnnotate{
 			id:         linevecID,
 			idtype:     linevecannotation,
 			annotation: restline,
 		})
 	}
-
+	return finalannotatewrite
 }

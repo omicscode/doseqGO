@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-func readcds(result chan []FastaSequence) {
+func readcds() []FastaSequence {
 
 	filename := "./serverfiles/cds.fasta"
 	file, err := os.Open(filename)
@@ -45,9 +45,9 @@ func readcds(result chan []FastaSequence) {
 
 	for i := 0; i <= len(header); i++ {
 		newseq = append(newseq, FastaSequence{
-			Header:   header[i],
-			Sequence: sequence[i],
+			header:   header[i],
+			sequence: sequence[i],
 		})
 	}
-	result <- newseq
+	return newseq
 }
