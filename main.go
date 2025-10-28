@@ -12,24 +12,6 @@ import (
 	"github.com/gofiber/template/html/v2"
 )
 
-type PageData struct {
-	Message string
-}
-
-type lastseq struct {
-	id             string
-	transcriptseq  string
-	cdsseq         string
-	proteinseq     string
-	idtype         string
-	annotation     string
-	annotate       []string
-	GeneAnnotation string
-	AnnotationType string
-	UnigeneID      string
-	IPR            []string
-}
-
 func main() {
 	engine := html.New("./views", ".html")
 	app := fiber.New(fiber.Config{
@@ -58,6 +40,36 @@ func main() {
 		}
 		return c.Render("finalseq", fiber.Map{
 			"Finalseq": finalseq,
+		})
+	})
+
+	app.Get("/variant", func(c *fiber.Ctx) error {
+		return c.Render("form", nil)
+	})
+
+	app.Post("/variant", func(c *fiber.Ctx) error {
+		fvalue := new(FormChrom)
+		if err := c.BodyParser(fvalue); err != nil {
+			return c.Status(fiber.StatusBadRequest).SendString("id not found")
+		}
+		idreturn := []VCF{}
+		valuereturn := variantbrowse()
+		for _, key := range valuereturn {
+			if fvalue.Value == key.Chrom {
+				idreturn = append(idreturn, VCF{
+					Chrom:       key.Chrom,
+					Pos:         key.Pos,
+					Id:          key.Id,
+					Ref:         key.Ref,
+					Alt:         key.Alt,
+					Quality:     key.Quality,
+					Filter:      key.Filter,
+					Information: key.Information,
+				})
+			}
+		}
+		return c.Render("formid", fiber.Map{
+			"idreturnvalue": idreturn,
 		})
 	})
 	log.Fatal(app.Listen(":3000"))

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solid Template</title>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/style.css">
+	<script src="https://unpkg.com/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+     <h1>variantBrowse: A stand alone server for concurrently browsing your variants </h1>
+    <title></title>
+    <p> This stand alone server allows you to effecitively query your VCF files across the genotyping </p>
+</head>
+<body>
+    <h1>Search and analyze your VCF files</h1>
+    <form method="POST" action="/">
+        <label for="chrom">Chrom:</label><br>
+        <input type="text" id="userInput" name="userInput" value=""><br>
+        <input type="submit" value="Submit">
+    </form>
+    <title> the variant information is as follows: </title>
+    <ul>
+        {{ range . idreturnvalue }}
+        <li> The variants are {{.Chrom }} <br>
+            The position of the variant are {{.Pos}} <br>
+            The id of the variant are: {{.Id}} <br>
+                The ref variant are: {{.Ref}} <br>
+                    The alt variant are : {{.Alt}} <br>
+                        The quality variants are: {{.Quality}} <br>
+                            The filter of the searched variant are: {{.Filter}} <br>
+                                The information of the selected variant are : {{ .Information }}
+        <li>
+            {{ end }}
+    </ul>
+    <h3>The listed gene information from the sequence search is as follows: {{.Message}}</h3>
+    {{end}}
+</body>
+    <script src="views/main.js"></script>
+</html>
