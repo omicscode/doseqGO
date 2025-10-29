@@ -9,7 +9,7 @@
 - added a SVA single page application concurrent golang, javascript for browsing your VCF files.
 - No installation needed, just put your VCF files into the folder and analyze them for your variants.
 
-Fascinating all from sequencing to the variants with the power of the GO concurrency and all in one information place.
+Fascinating all from sequencing to the variants with the power of RUST.
 
 Gaurav Sablok \
 codeprog@icloud.com
